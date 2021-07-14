@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Haunt;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Mockery\Exception;
 
 class HauntController extends Controller
 {
@@ -40,7 +41,11 @@ class HauntController extends Controller
 
         try {
             $request->validate([
-                'name'  =>  'required'
+                'name'  =>  'string',
+                'description'  =>  'string',
+                'latitude'  =>  'numeric',
+                'longitude'  =>  'numeric',
+                'altitude'  =>  'numeric'
             ]);
         } catch (\Exception $e){
             return response()->json([
@@ -49,9 +54,7 @@ class HauntController extends Controller
             ],422);
         }
 
-        $haunt = new Haunt([
-            'name'  =>  $request->get('name')
-        ]);
+        $haunt = new Haunt($request->all());
 
         try {
             $haunt->save();
@@ -99,7 +102,33 @@ class HauntController extends Controller
      */
     public function update(Request $request, Haunt $haunt)
     {
-        //
+        try {
+            $request->validate([
+                'name'  =>  'string',
+                'description'  =>  'string',
+                'latitude'  =>  'numeric',
+                'longitude'  =>  'numeric',
+                'altitude'  =>  'numeric'
+            ]);
+        } catch (\Exception $e){
+            return response()->json([
+                'error' =>  "Unable to update haunt.",
+                'message'   =>  $e->getMessage()
+            ],422);
+        }
+
+        try {
+            $haunt->update($request->all());
+        } catch (Exception $e){
+            return response()->json([
+                'error' =>  "Unable to update haunt.",
+                'message'   =>  $e->getMessage()
+            ],422);
+        }
+
+        return response()->json([
+            'message'   =>  "Haunt {$haunt->id} {$haunt->name} updated successfully."
+        ],200);
     }
 
     /**
@@ -110,6 +139,17 @@ class HauntController extends Controller
      */
     public function destroy(Haunt $haunt)
     {
-        return Haunt::destroy($haunt->id);
+        try {
+            Haunt::destroy($haunt->id);
+        } catch (Exception $e){
+            return response()->json([
+                'error' =>  "Unable to delete haunt.",
+                'message'   =>  $e->getMessage()
+            ],422);
+        }
+
+        return response()->json([
+            'message'   =>  "Haunt {$haunt->id} {$haunt->name} destroyed successfully."
+        ],200);
     }
 }
