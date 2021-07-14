@@ -18,9 +18,9 @@ class CreateHauntsTable extends Migration
           $table->string('name');
           $table->longtext('description')->nullable();
           $table->string('status')->default('idle');
-          $table->float('latitude')->nullable();
-          $table->float('longitude')->nullable();
-          $table->float('altitude')->nullable();
+          $table->decimal('latitude', 10, 7)->nullable();
+          $table->decimal('longitude', 10, 7)->nullable();
+          $table->decimal('altitude', 10, 7)->nullable();
           $table->boolean('idle')->default(true);
           $table->timestamps();
         });
