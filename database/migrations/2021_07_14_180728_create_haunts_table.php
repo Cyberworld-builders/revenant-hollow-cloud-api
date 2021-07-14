@@ -16,7 +16,7 @@ class CreateHauntsTable extends Migration
         Schema::create('haunts', function (Blueprint $table) {
           $table->id();
           $table->string('name');
-          $table->longtext('description')->nullable();
+          $table->longText('description')->nullable();
           $table->string('status')->default('idle');
           $table->decimal('latitude', 10, 7)->nullable();
           $table->decimal('longitude', 10, 7)->nullable();

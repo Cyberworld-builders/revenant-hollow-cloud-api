@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Haunt extends Model
 {
     use HasFactory;
-    protected $fillable = ['name','idle','latitude','longitude','altitude'];
+    protected $fillable = ['name','description','idle','latitude','longitude','altitude'];
 }
