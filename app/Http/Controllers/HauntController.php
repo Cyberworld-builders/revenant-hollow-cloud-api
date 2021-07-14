@@ -76,7 +76,7 @@ class HauntController extends Controller
      */
     public function show(Haunt $haunt)
     {
-        return Haunt::find($haunt);
+        return $haunt;
     }
 
     /**
@@ -110,6 +110,6 @@ class HauntController extends Controller
      */
     public function destroy(Haunt $haunt)
     {
-        //
+        return Haunt::destroy($haunt->id);
     }
 }
