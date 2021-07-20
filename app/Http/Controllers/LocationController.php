@@ -15,7 +15,7 @@ class LocationController extends Controller
      */
     public function index()
     {
-        Location::all();
+        return Location::all();
     }
 
     /**
